@@ -45,6 +45,7 @@ import { useRouter } from 'vue-router'
 import { post } from '../../utils/request'
 import Toast, { useToastEffect } from '../../components/Toast.vue'
 
+// 处理注册逻辑
 const useRegisterEffect = (showToast) => {
   const router = useRouter()
   const data = reactive({
@@ -76,6 +77,7 @@ const useRegisterEffect = (showToast) => {
     ensurement
   }
 }
+// 处理已有账号逻辑
 const useRegisterClickEffect = () => {
   const router = useRouter()
   const handleRegisterClick = () => {

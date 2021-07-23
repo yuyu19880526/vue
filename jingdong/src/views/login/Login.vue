@@ -30,6 +30,7 @@ import { useRouter } from 'vue-router'
 import { post } from '../../utils/request'
 import Toast, { useToastEffect } from '../../components/Toast'
 
+// 处理登陆逻辑
 const useLoginEffect = (showToast) => {
   const router = useRouter()
   const data = reactive({ username: '', password: '' })
@@ -53,6 +54,7 @@ const useLoginEffect = (showToast) => {
   return { handleLogin, username, password }
 }
 
+// 处理跳转注册页面
 const useRegisterEffect = () => {
   const router = useRouter()
   const handleRegisterClick = () => {
