@@ -1,7 +1,9 @@
 <template>
   <div class="shop__item">
     <img :src="item.imgUrl" class="shop__item__img">
-    <div class="shop__content">
+    <div
+      :class="{'shop__content': true, 'shop__content--border': isHideBoder ? false : true}"
+    >
       <div class="shop__content__title">{{ item.name }}</div>
       <div class="shop__content__tags">
         <span class="shop__content__tag" >月销{{ item.sales }}</span>
@@ -15,7 +17,7 @@
 <script>
 export default {
   name: 'ShopInfo',
-  props: ['item']
+  props: ['item', 'isHideBoder']
 }
 </script>
 <style lang="scss" scoped>
@@ -33,7 +35,9 @@ export default {
   &__content{
     flex: 1;
     padding-bottom: .12rem;
-    border-bottom: 1px solid $content-bgColor;
+    &--border{
+      border-bottom: 1px solid $content-bgColor;
+    }
     &__title{
       line-height: .22rem;
       font-size: .16rem;
