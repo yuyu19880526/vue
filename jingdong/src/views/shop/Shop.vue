@@ -8,10 +8,11 @@
       </div>
     </div>
     <ShopInfo
-    :item="item"
-    :isHideBoder="true"
-    v-show="item.imgUrl"
-  />
+      :item="item"
+      :isHideBoder="true"
+      v-show="item.imgUrl"
+    />
+    <Content />
   </div>
 </template>
 <script>
@@ -19,6 +20,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { reactive, toRefs } from 'vue'
 import { get } from '../../utils/request'
 import ShopInfo from '../../components/ShopInfo.vue'
+import Content from './Content.vue'
 
 // 点击回退逻辑
 const useBackEffect = () => {
@@ -44,7 +46,7 @@ const useShopInfoEffect = () => {
 }
 export default {
   name: 'Shop',
-  components: { ShopInfo },
+  components: { ShopInfo, Content },
   setup () {
     const { getItemData, item } = useShopInfoEffect()
     const { handleBack } = useBackEffect()

@@ -140,7 +140,7 @@ export default {
     box-shadow: 0 .04rem .08rem 0 $content-buttonShadow;
     border-radius: .04rem;
     border-radius: .04rem;
-    color: #fff;
+    color: $bgColor;
   }
   &__register-link{
     text-align: center;
