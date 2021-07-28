@@ -73,7 +73,11 @@ const useShopListEffect = (currentTab) => {
 }
 export default {
   name: 'Content',
-  setup () {
+  setup (props, context) {
+    const { attrs, slots, emit } = context
+    console.log(attrs)
+    console.log(emit)
+    console.log(slots)
     const { currentTab, handleTabClick } = useTabEffect()
     const { contentList } = useShopListEffect(currentTab)
     return { currentTab, contentList, categoryItem, handleTabClick }

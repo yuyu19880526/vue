@@ -12,7 +12,7 @@
       :isHideBoder="true"
       v-show="item.imgUrl"
     />
-    <Content />
+    <Content ids="app"/>
   </div>
 </template>
 <script>
