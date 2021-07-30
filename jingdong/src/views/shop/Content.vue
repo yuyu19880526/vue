@@ -52,6 +52,14 @@ const useTabEffect = () => {
   const handleTabClick = (tab) => {
     currentTab.value = tab
   }
+  // watch(currentTab, (cur, pre) => {
+  //   console.log(cur + '---' + pre)
+  // }, {
+  //   immediate: true
+  // })
+  // watchEffect(() => {
+  //   console.log(currentTab.value)
+  // })
   return { currentTab, handleTabClick }
 }
 // 列表相关的数据逻辑
@@ -73,11 +81,7 @@ const useShopListEffect = (currentTab) => {
 }
 export default {
   name: 'Content',
-  setup (props, context) {
-    const { attrs, slots, emit } = context
-    console.log(attrs)
-    console.log(emit)
-    console.log(slots)
+  setup () {
     const { currentTab, handleTabClick } = useTabEffect()
     const { contentList } = useShopListEffect(currentTab)
     return { currentTab, contentList, categoryItem, handleTabClick }
