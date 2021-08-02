@@ -13,6 +13,7 @@
       v-show="item.imgUrl"
     />
     <Content/>
+    <Cart/>
   </div>
 </template>
 <script>
@@ -21,6 +22,7 @@ import { reactive, toRefs } from 'vue'
 import { get } from '../../utils/request'
 import ShopInfo from '../../components/ShopInfo.vue'
 import Content from './Content.vue'
+import Cart from './Cart.vue'
 
 // 点击回退逻辑
 const useBackEffect = () => {
@@ -46,7 +48,7 @@ const useShopInfoEffect = () => {
 }
 export default {
   name: 'Shop',
-  components: { ShopInfo, Content },
+  components: { ShopInfo, Content, Cart },
   setup () {
     const { getItemData, item } = useShopInfoEffect()
     const { handleBack } = useBackEffect()
