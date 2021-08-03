@@ -187,11 +187,12 @@ export default {
       position: absolute;
       right: 0;
       bottom: .12rem;
+      line-height: .16rem;
+      height: .2rem;
       &__minus, &__plus {
         display: inline-block;
         width: .2rem;
         height: .2rem;
-        line-height: .16rem;
         border-radius: 50%;
         font-size: .2rem;
         text-align: center;
@@ -203,6 +204,7 @@ export default {
       }
       &__plus {
         background: $content-button;
+        border: .01rem solid $content-button;
         color: $bgColor;
         margin-left: .05rem;
         &--dis{

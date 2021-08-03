@@ -80,7 +80,7 @@ export default {
       position: absolute;
       left: .48rem;
       top: .04rem;
-      padding: .02rem;
+      padding:0 .02rem;
       text-align: center;
       line-height: .2rem;
       min-width: .2rem;
