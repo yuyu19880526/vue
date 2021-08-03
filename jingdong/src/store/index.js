@@ -27,12 +27,9 @@ export default createStore({
         product.count = 0
       }
       product.count += number
-      if (product.count < 0) {
-        product.count = 0
-      }
-      if (product.count > productInfo.sales) {
-        product.count = productInfo.sales
-      }
+      if (number > 0) { product.check = true }
+      if (product.count < 0) { product.count = 0 }
+      if (product.count > productInfo.sales) { product.count = productInfo.sales }
       shopInfo[productId] = product
       state.cartList[shopId] = shopInfo
     }

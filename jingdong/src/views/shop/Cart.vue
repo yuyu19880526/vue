@@ -6,6 +6,14 @@
         :key="item._id"
       >
         <div class="product__item" v-if="item.count > 0">
+          <div
+            v-html="item.check ? '&#xe652;': '&#xe66c;'"
+            :class="{
+              'product__item__icon': true,
+              'iconfont':true,
+              'product__item__icon--nocheck': !item.check
+            }"
+          />
           <img class="product__item__img" :src="item.imgUrl" alt="">
           <div class="product__item__detail">
             <h4 class="product__item__title">{{item.name}}</h4>
@@ -107,6 +115,16 @@ export default {
       margin: 0 .16rem;
       &__detail{
         overflow: hidden;
+      }
+      &__icon{
+        color: $medium-fontColor;
+        line-height: .5rem;
+        margin-right: .16rem;
+        font-size: .2rem;
+        color: #0091FF;
+        &--nocheck{
+          color: $medium-fontColor;
+        }
       }
       &__img{
         width: .46rem;

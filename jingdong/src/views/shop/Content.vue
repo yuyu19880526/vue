@@ -27,13 +27,13 @@
         </div>
         <div class="product__number">
           <span
-            v-if="cartList?.[shopId]?.[item._id]?.count > 0"
+            v-if="item.count > 0"
             class="product__number__minus"
             @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }"
           >-</span>
-          {{ cartList?.[shopId]?.[item._id]?.count || 0 }}
+          {{ item.count || 0 }}
           <span
-            :class="{'product__number__plus': true, 'product__number__plus--dis': cartList?.[shopId]?.[item._id]?.count >= item.sales}"
+            :class="{'product__number__plus': true, 'product__number__plus--dis': item.count >= item.sales}"
             @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }"
           >+</span>
         </div>
@@ -88,14 +88,13 @@ export default {
     const shopId = route.params.id
     const { currentTab, handleTabClick } = useTabEffect()
     const { contentList } = useShopListEffect(currentTab, shopId)
-    const { cartList, changeCartItemInfo } = useCommonCartEffect()
+    const { changeCartItemInfo } = useCommonCartEffect()
     return {
       shopId,
       currentTab,
       handleTabClick,
       contentList,
       categoryItem,
-      cartList,
       changeCartItemInfo
     }
   }
