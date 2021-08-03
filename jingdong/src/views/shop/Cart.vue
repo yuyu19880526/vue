@@ -3,18 +3,55 @@
     <div class="check">
       <div class="check__icon">
         <img class="check__icon__img" src="http://www.dell-lee.com/imgs/vue3/basket.png" alt="">
-        <div class="check__icon__tag">1</div>
+        <div class="check__icon__tag">{{total}}</div>
       </div>
       <div class="check__info">
-        总计：<span class="check__info__price">&yen;128</span>
+        总计：<span class="check__info__price">&yen;{{price}}</span>
       </div>
       <div class="check__btn">去结算</div>
     </div>
   </div>
 </template>
 <script>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+// 购物车相关逻辑
+const useCartEffect = () => {
+  const route = useRoute()
+  const shopId = route.params.id
+  const store = useStore()
+  const cartList = store.state.cartList
+  const total = computed(() => {
+    const productList = cartList[shopId]
+    let count = 0
+    if (productList) {
+      for (const i in productList) {
+        const product = productList[i]
+        count += product.count
+      }
+    }
+    return count
+  })
+  const price = computed(() => {
+    const productList = cartList[shopId]
+    let count = 0
+    if (productList) {
+      for (const i in productList) {
+        const product = productList[i]
+        count += product.count * product.price
+      }
+    }
+    return count
+  })
+  return { total, price }
+}
 export default {
-  name: 'Cart'
+  name: 'Cart',
+  setup () {
+    const { total, price } = useCartEffect()
+    return { total, price }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -41,16 +78,17 @@ export default {
     }
     &__tag{
       position: absolute;
-      right: .2rem;
+      left: .4rem;
       top: .04rem;
+      padding: 0 .04rem;
       text-align: center;
       line-height: .2rem;
-      width: .2rem;
+      min-width: .2rem;
       height: .2rem;
       font-size: .16rem;
       color: $bgColor;
       background: $content-highlignt;
-      border-radius: 50%;
+      border-radius: .1rem;
       transform: scale(50%,50%);
     }
   }
