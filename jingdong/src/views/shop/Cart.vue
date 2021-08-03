@@ -6,7 +6,7 @@
         <div class="check__icon__tag">{{total}}</div>
       </div>
       <div class="check__info">
-        总计：<span class="check__info__price">&yen;{{price}}</span>
+        总计：<span class="check__info__price">&yen; {{price}}</span>
       </div>
       <div class="check__btn">去结算</div>
     </div>
@@ -42,7 +42,7 @@ const useCartEffect = () => {
         count += product.count * product.price
       }
     }
-    return count
+    return count.toFixed(2)
   })
   return { total, price }
 }
@@ -78,9 +78,9 @@ export default {
     }
     &__tag{
       position: absolute;
-      left: .4rem;
+      left: .48rem;
       top: .04rem;
-      padding: 0 .04rem;
+      padding: .02rem;
       text-align: center;
       line-height: .2rem;
       min-width: .2rem;
@@ -88,8 +88,9 @@ export default {
       font-size: .16rem;
       color: $bgColor;
       background: $content-highlignt;
-      border-radius: .1rem;
+      border-radius: .14rem;
       transform: scale(50%,50%);
+      transform-origin: left center;
     }
   }
   &__info{

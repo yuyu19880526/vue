@@ -26,9 +26,16 @@
           </p>
         </div>
         <div class="product__number">
-          <span class="product__number__minus" @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }">-</span>
+          <span
+            v-if="cartList?.[shopId]?.[item._id]?.count > 0"
+            class="product__number__minus"
+            @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }"
+          >-</span>
           {{ cartList?.[shopId]?.[item._id]?.count || 0 }}
-          <span class="product__number__plus" @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }">+</span>
+          <span
+            :class="{'product__number__plus': true, 'product__number__plus--dis': cartList?.[shopId]?.[item._id]?.count >= item.sales}"
+            @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }"
+          >+</span>
         </div>
       </div>
     </div>
@@ -107,7 +114,6 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/viriables.scss';
 @import '../../style/mixins.scss';
-
 .content{
   display: flex;
   position: absolute;
@@ -199,6 +205,9 @@ export default {
         background: $content-button;
         color: $bgColor;
         margin-left: .05rem;
+        &--dis{
+          background: $light-fontColor;
+        }
       }
     }
   }
