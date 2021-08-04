@@ -4,13 +4,14 @@
       <div class="product__header">
         <div class="product__header__all">
           <span
+            v-html="isAllchecked ? '&#xe652;': '&#xe66c;'"
+            @click="() => setCartItemCheck(shopId)"
             :class="{
-              'product__item__icon': true,
-              'iconfont':true
+              'product__header__icon': true,
+              'iconfont': true,
+              'product__header__icon--all': isAllchecked
             }"
-          >
-            &#xe652;
-          </span>
+          />
           全选
         </div>
         <div class="product__header__clear" @click="()=>cleanCartProduct(shopId)">清空购物车</div>
@@ -72,6 +73,7 @@ import { useCommonCartEffect } from './commonCartEffect'
 const useCartEffect = (shopId) => {
   const store = useStore()
   const cartList = store.state.cartList
+  // 总数
   const total = computed(() => {
     const productList = cartList[shopId]
     let count = 0
@@ -83,6 +85,7 @@ const useCartEffect = (shopId) => {
     }
     return count
   })
+  // 价格
   const price = computed(() => {
     const productList = cartList[shopId]
     let count = 0
@@ -94,24 +97,45 @@ const useCartEffect = (shopId) => {
     }
     return count.toFixed(2)
   })
+  // 是否全选中
+  const isAllchecked = computed(() => {
+    const productList = cartList[shopId]
+    let result = true
+    if (productList) {
+      for (const i in productList) {
+        const product = productList[i]
+        if (product.count > 0 && !product.check) {
+          result = false
+        }
+      }
+    }
+    return result
+  })
+  // 购物车内容
   const productList = computed(() => {
     const productList = cartList[shopId] || []
     return productList
   })
+  // 购物车勾选
   const changeCartItemChecked = (shopId, productId) => {
     store.commit('changeCartItemChecked', { shopId, productId })
   }
+  // 全部清空
   const cleanCartProduct = (shopId) => {
     store.commit('cleanCartProduct', { shopId })
   }
-  return { total, price, productList, changeCartItemChecked, cleanCartProduct }
+  // 全选
+  const setCartItemCheck = (shopId) => {
+    store.commit('setCartItemCheck', { shopId })
+  }
+  return { total, price, productList, changeCartItemChecked, cleanCartProduct, isAllchecked, setCartItemCheck }
 }
 export default {
   name: 'Cart',
   setup () {
     const route = useRoute()
     const shopId = route.params.id
-    const { total, price, productList, changeCartItemChecked, cleanCartProduct } = useCartEffect(shopId)
+    const { total, price, productList, changeCartItemChecked, cleanCartProduct, isAllchecked, setCartItemCheck } = useCartEffect(shopId)
     const { changeCartItemInfo } = useCommonCartEffect()
     return {
       total,
@@ -120,7 +144,9 @@ export default {
       changeCartItemInfo,
       shopId,
       changeCartItemChecked,
-      cleanCartProduct
+      cleanCartProduct,
+      isAllchecked,
+      setCartItemCheck
     }
   }
 }
@@ -142,7 +168,16 @@ export default {
       line-height: .52rem;
       border-bottom: 1px solid $content-bgColor;
       display: flex;
-      &__all{}
+      &__all{
+        width: .64rem;
+        margin-left: .16rem;
+        font-size:.14rem;
+      }
+      &__icon{
+        font-size: .2rem;
+        margin-right: .08rem;
+        color: #0091FF;
+      }
       &__clear{
         flex: 1;
         text-align:right;
@@ -164,9 +199,6 @@ export default {
         margin-right: .16rem;
         font-size: .2rem;
         color: #0091FF;
-        &--nocheck{
-          color: $light-fontColor;
-        }
       }
       &__img{
         width: .46rem;

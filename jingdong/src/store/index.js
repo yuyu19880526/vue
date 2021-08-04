@@ -41,6 +41,13 @@ export default createStore({
     cleanCartProduct (state, payload) {
       const { shopId } = payload
       state.cartList[shopId] = {}
+    },
+    setCartItemCheck (state, payload) {
+      const { shopId } = payload
+      const productList = state.cartList[shopId]
+      for (const i in productList) {
+        productList[i].check = true
+      }
     }
   },
   actions: {
