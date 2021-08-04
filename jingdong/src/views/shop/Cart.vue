@@ -1,6 +1,20 @@
 <template>
   <div class="cart">
     <div class="product">
+      <div class="product__header">
+        <div class="product__header__all">
+          <span
+            :class="{
+              'product__item__icon': true,
+              'iconfont':true
+            }"
+          >
+            &#xe652;
+          </span>
+          全选
+        </div>
+        <div class="product__header__clear" @click="()=>cleanCartProduct(shopId)">清空购物车</div>
+      </div>
       <template
         v-for="item in productList"
         :key="item._id"
@@ -13,6 +27,7 @@
               'iconfont':true,
               'product__item__icon--nocheck': !item.check
             }"
+            @click="() => changeCartItemChecked(shopId, item._id)"
           />
           <img class="product__item__img" :src="item.imgUrl" alt="">
           <div class="product__item__detail">
@@ -83,16 +98,30 @@ const useCartEffect = (shopId) => {
     const productList = cartList[shopId] || []
     return productList
   })
-  return { total, price, productList }
+  const changeCartItemChecked = (shopId, productId) => {
+    store.commit('changeCartItemChecked', { shopId, productId })
+  }
+  const cleanCartProduct = (shopId) => {
+    store.commit('cleanCartProduct', { shopId })
+  }
+  return { total, price, productList, changeCartItemChecked, cleanCartProduct }
 }
 export default {
   name: 'Cart',
   setup () {
     const route = useRoute()
     const shopId = route.params.id
-    const { total, price, productList } = useCartEffect(shopId)
+    const { total, price, productList, changeCartItemChecked, cleanCartProduct } = useCartEffect(shopId)
     const { changeCartItemInfo } = useCommonCartEffect()
-    return { total, price, productList, changeCartItemInfo, shopId }
+    return {
+      total,
+      price,
+      productList,
+      changeCartItemInfo,
+      shopId,
+      changeCartItemChecked,
+      cleanCartProduct
+    }
   }
 }
 </script>
@@ -108,6 +137,20 @@ export default {
     flex: 1;
     overflow-y: scroll;
     background: $bgColor;
+    &__header{
+      height: .52rem;
+      line-height: .52rem;
+      border-bottom: 1px solid $content-bgColor;
+      display: flex;
+      &__all{}
+      &__clear{
+        flex: 1;
+        text-align:right;
+        margin-right: .16rem;
+        font-size: .14rem;
+        color: $content-fontcolor;
+      }
+    }
     &__item{
       position: relative;
       display: flex;
@@ -117,13 +160,12 @@ export default {
         overflow: hidden;
       }
       &__icon{
-        color: $medium-fontColor;
         line-height: .5rem;
         margin-right: .16rem;
         font-size: .2rem;
         color: #0091FF;
         &--nocheck{
-          color: $medium-fontColor;
+          color: $light-fontColor;
         }
       }
       &__img{
