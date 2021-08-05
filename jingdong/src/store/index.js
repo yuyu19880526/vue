@@ -7,12 +7,12 @@ const setLocalCartList = (state) => {
 }
 
 const getLocalCartList = () => {
+  // {shopId: {shopName: '', productList: {}}}
   return JSON.parse(localStorage.getItem('cartList')) || {}
 }
 
 export default createStore({
   state: {
-    // {shopId: {shopName: '', productList: {}}}
     cartList: getLocalCartList()
   },
   mutations: {

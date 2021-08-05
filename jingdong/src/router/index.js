@@ -9,12 +9,22 @@ const routes = [
   {
     path: '/shop/:id',
     name: 'Shop',
-    component: () => import(/* webpackChunkName: "about" */ '../views/shop/Shop.vue')
+    component: () => import(/* webpackChunkName: "shop" */ '../views/shop/Shop.vue')
+  },
+  {
+    path: '/cart-list',
+    name: 'CartList',
+    component: () => import(/* webpackChunkName: "cart-list" */ '../views/cartList/CartList.vue')
+  },
+  {
+    path: '/order-comfirmation/:id',
+    name: 'OrderComfirmation',
+    component: () => import(/* webpackChunkName: "/order-comfirmation" */ '../views/orderComfirmation/OrderComfirmation.vue')
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "about" */ '../views/login/Login.vue'),
+    component: () => import(/* webpackChunkName: "login" */ '../views/login/Login.vue'),
     beforeEnter (to, from, next) {
       const { isLogin } = localStorage
       isLogin ? next({ name: 'Home' }) : next()
@@ -23,7 +33,7 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: () => import(/* webpackChunkName: "about" */ '../views/register/Register.vue'),
+    component: () => import(/* webpackChunkName: "register" */ '../views/register/Register.vue'),
     beforeEnter (to, from, next) {
       const { isLogin } = localStorage
       isLogin ? next({ name: 'Home' }) : next()
