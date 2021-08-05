@@ -27,14 +27,14 @@
         </div>
         <div class="product__number">
           <span
-            v-if="cartList?.[shopId]?.[item._id]?.count > 0"
+            v-if="cartList?.[shopId]?.productList?.[item._id]?.count > 0"
             class="product__number__minus"
-            @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }"
+            @click="() => { changeCartItem(shopId, item._id, item, -1, shopName) }"
           >-</span>
-          {{ cartList?.[shopId]?.[item._id]?.count || 0 }}
+          {{ cartList?.[shopId]?.productList?.[item._id]?.count || 0 }}
           <span
             :class="{'product__number__plus': true, 'product__number__plus--dis': item.count >= item.sales}"
-            @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }"
+            @click="() => { changeCartItem(shopId, item._id, item, 1, shopName) }"
           >+</span>
         </div>
       </div>
@@ -81,14 +81,25 @@ const useShopListEffect = (currentTab, shopId) => {
   return { getProductListData, contentList }
 }
 
+// 购物车相关逻辑
+const useCartEffect = () => {
+  const { changeCartItemInfo, cartList, changeShopName } = useCommonCartEffect()
+  const changeCartItem = (shopId, productId, item, num, shopName) => {
+    changeCartItemInfo(shopId, productId, item, num)
+    changeShopName(shopId, shopName)
+  }
+  return { cartList, changeCartItem }
+}
+
 export default {
   name: 'Content',
+  props: ['shopName'],
   setup () {
     const route = useRoute()
     const shopId = route.params.id
     const { currentTab, handleTabClick } = useTabEffect()
     const { contentList } = useShopListEffect(currentTab, shopId)
-    const { changeCartItemInfo, cartList } = useCommonCartEffect()
+    const { cartList, changeCartItem } = useCartEffect()
     return {
       shopId,
       currentTab,
@@ -96,7 +107,7 @@ export default {
       contentList,
       categoryItem,
       cartList,
-      changeCartItemInfo
+      changeCartItem
     }
   }
 }
