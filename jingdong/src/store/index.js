@@ -1,9 +1,19 @@
 import { createStore } from 'vuex'
 
+const setLocalCartList = (state) => {
+  const { cartList } = state
+  const cartListString = JSON.stringify(cartList)
+  localStorage.setItem('cartList', cartListString)
+}
+
+const getLocalCartList = () => {
+  return JSON.parse(localStorage.getItem('cartList')) || {}
+}
+
 export default createStore({
   state: {
     // {shopId: {shopName: '', productList: {}}}
-    cartList: {}
+    cartList: getLocalCartList()
   },
   mutations: {
     changeCartItemInfo (state, payload) {
@@ -26,6 +36,7 @@ export default createStore({
       if (product.count > productInfo.sales) { product.count = productInfo.sales }
       shopInfo.productList[productId] = product
       state.cartList[shopId] = shopInfo
+      setLocalCartList(state)
     },
     changeShopName (state, payload) {
       const { shopId, shopName } = payload
@@ -34,11 +45,13 @@ export default createStore({
       }
       shopInfo.shopName = shopName
       state.cartList[shopId] = shopInfo
+      setLocalCartList(state)
     },
     changeCartItemChecked (state, payload) {
       const { shopId, productId } = payload
       const product = state.cartList[shopId].productList[productId]
       product.check = !product.check
+      setLocalCartList(state)
     },
     cleanCartProduct (state, payload) {
       const { shopId } = payload
@@ -46,6 +59,7 @@ export default createStore({
         shopName: '',
         productList: {}
       }
+      setLocalCartList(state)
     },
     setCartItemCheck (state, payload) {
       const { shopId } = payload
@@ -53,6 +67,7 @@ export default createStore({
       for (const i in productList) {
         productList[i].check = true
       }
+      setLocalCartList(state)
     }
   },
   actions: {

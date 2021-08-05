@@ -120,6 +120,7 @@ const useCartEffect = (shopId) => {
   // 全部清空
   const cleanCartProduct = (shopId) => {
     store.commit('cleanCartProduct', { shopId })
+    showCartList.value = false
   }
   // 全选
   const setCartItemCheck = (shopId) => {
