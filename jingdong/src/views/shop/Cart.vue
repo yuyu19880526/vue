@@ -1,6 +1,7 @@
 <template>
+  <div class="mask" @click="handleShowCartlist" v-if="showCartList"></div>
   <div class="cart">
-    <div class="product" v-if="showCartList && total > 0">
+    <div class="product" v-if="showCartList">
       <div class="product__header">
         <div class="product__header__all">
           <span
@@ -78,7 +79,7 @@ const useCartEffect = (shopId) => {
 
   // 显示隐藏购物车内容
   const handleShowCartlist = (shopId) => {
-    if (!cartList?.[shopId]) return
+    if (total.value === 0) return
     console.log(cartList?.[shopId])
     showCartList.value = !showCartList.value
   }
@@ -166,11 +167,22 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/viriables.scss';
 @import '../../style/mixins.scss';
+.mask{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: $content-inputPlaceholder;
+  z-index: 1;
+}
 .cart{
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 2;
+  background: $bgColor;
   .product{
     flex: 1;
     overflow-y: scroll;
