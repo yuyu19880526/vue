@@ -15,7 +15,9 @@
           />
           全选
         </div>
-        <div class="product__header__clear" @click="()=>cleanCartProduct(shopId)">清空购物车</div>
+        <div class="product__header__clear">
+          <span @click="()=>cleanCartProduct(shopId)">清空购物车</span>
+        </div>
       </div>
       <template
         v-for="item in productList"
@@ -54,7 +56,7 @@
       </template>
     </div>
     <div class="check">
-      <div class="check__icon" @click="() => handleShowCartlist(shopId)">
+      <div class="check__icon" @click="handleShowCartlist">
         <img class="check__icon__img" src="http://www.dell-lee.com/imgs/vue3/basket.png" alt="">
         <div class="check__icon__tag">{{total}}</div>
       </div>
@@ -78,9 +80,7 @@ const useCartEffect = (shopId) => {
   const showCartList = ref(false)
 
   // 显示隐藏购物车内容
-  const handleShowCartlist = (shopId) => {
-    if (total.value === 0) return
-    console.log(cartList?.[shopId])
+  const handleShowCartlist = () => {
     showCartList.value = !showCartList.value
   }
   // 总数
