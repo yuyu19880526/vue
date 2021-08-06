@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="top">
       <div class="top__header">
-        <div class="iconfont top__header__back">&#xe606;</div>
+        <div class="iconfont top__header__back" @click="handleBack">&#xe606;</div>
         确认订单
       </div>
       <div class="top__receiver">
@@ -37,10 +37,10 @@
     <div class="cart">
       <div class="check">
         <div class="check__info">
-          实付金额<span class="check__info__price">&yen;{{computedCart.price}}</span>
+          实付金额<span class="check__info__price">&yen;<b>{{computedCart.price}}</b></span>
         </div>
         <div class="check__btn">
-          <router-link :to="{path: `/order-comfirmation/${shopId}`}">
+          <router-link :to="{path: `/shop/${shopId}`}">
             提交订单
           </router-link>
         </div>
@@ -50,14 +50,23 @@
 </template>
 <script>
 import { useCommonCartEffect } from '../../effect/commonCartEffect'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+// 点击回退逻辑
+const useBackEffect = (shopId) => {
+  const router = useRouter()
+  const handleBack = () => {
+    router.push({ path: `/shop/${shopId}` })
+  }
+  return { handleBack }
+}
 export default {
   name: 'OrderComfirmation',
   setup () {
     const route = useRoute()
     const shopId = route.params.id
     const { productList, shopName, computedCart } = useCommonCartEffect(shopId)
-    return { productList, shopName, computedCart }
+    const { handleBack } = useBackEffect(shopId)
+    return { productList, shopName, computedCart, handleBack }
   }
 }
 </script>
