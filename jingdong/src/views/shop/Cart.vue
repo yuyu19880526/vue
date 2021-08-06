@@ -88,26 +88,6 @@ const useCartEffect = (shopId) => {
     showCartList.value = !showCartList.value
   }
 
-  const computedCart = computed(() => {
-    const result = {
-      total: 0,
-      price: 0,
-      isAllchecked: true
-    }
-    const productList = cartList?.[shopId]?.productList
-    if (productList) {
-      for (const i in productList) {
-        const product = productList[i]
-        result.total += product.count
-        result.price += product.count * product.price
-        if (product.count > 0 && !product.check) {
-          result.isAllchecked = false
-        }
-      }
-    }
-    result.price = result.price.toFixed(2)
-    return result
-  })
   // 购物车内容
   const productList = computed(() => {
     const productList = cartList?.[shopId]?.productList || []
@@ -126,15 +106,15 @@ const useCartEffect = (shopId) => {
   const setCartItemCheck = (shopId) => {
     store.commit('setCartItemCheck', { shopId })
   }
-  return { cartList, computedCart, productList, changeCartItemChecked, cleanCartProduct, setCartItemCheck, showCartList, handleShowCartlist }
+  return { cartList, productList, changeCartItemChecked, cleanCartProduct, setCartItemCheck, showCartList, handleShowCartlist }
 }
 export default {
   name: 'Cart',
   setup () {
     const route = useRoute()
     const shopId = route.params.id
-    const { cartList, computedCart, productList, changeCartItemChecked, cleanCartProduct, setCartItemCheck, showCartList, handleShowCartlist } = useCartEffect(shopId)
-    const { changeCartItemInfo } = useCommonCartEffect()
+    const { cartList, productList, changeCartItemChecked, cleanCartProduct, setCartItemCheck, showCartList, handleShowCartlist } = useCartEffect(shopId)
+    const { changeCartItemInfo, computedCart } = useCommonCartEffect(shopId)
     return {
       cartList,
       computedCart,
@@ -162,64 +142,5 @@ export default {
   bottom: 0;
   background: $content-inputPlaceholder;
   z-index: 1;
-}
-.cart{
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  background: $bgColor;
-}
-.check{
-  display: flex;
-  line-height: .49rem;
-  height: .49rem;
-  border-top: .01rem solid $content-bgColor;
-  &__icon{
-    width: .84rem;
-    position: relative;
-    &__img {
-      display: block;
-      width: .28rem;
-      height: .26rem;
-      margin: .12rem auto;
-    }
-    &__tag{
-      position: absolute;
-      left: .48rem;
-      top: .04rem;
-      padding:0 .02rem;
-      text-align: center;
-      line-height: .2rem;
-      min-width: .2rem;
-      height: .2rem;
-      font-size: .16rem;
-      color: $bgColor;
-      background: $content-highlignt;
-      border-radius: .14rem;
-      transform: scale(50%,50%);
-      transform-origin: left center;
-    }
-  }
-  &__info{
-    flex: 1;
-    font-size: .12rem;
-    color: $content-fontcolor;
-    &__price{
-      font-size: .18rem;
-      color:  $content-highlignt;
-    }
-  }
-  &__btn{
-    width: .98rem;
-    font-size: .14rem;
-    text-align: center;
-    background: #4FB0F9;
-    a{
-      color: $bgColor;
-      text-decoration: none;
-    }
-  }
 }
 </style>

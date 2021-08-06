@@ -110,3 +110,62 @@
     }
   }
 }
+.cart{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: $bgColor;
+}
+.check{
+  display: flex;
+  line-height: .49rem;
+  height: .49rem;
+  border-top: .01rem solid $content-bgColor;
+  &__icon{
+    width: .84rem;
+    position: relative;
+    &__img {
+      display: block;
+      width: .28rem;
+      height: .26rem;
+      margin: .12rem auto;
+    }
+    &__tag{
+      position: absolute;
+      left: .48rem;
+      top: .04rem;
+      padding:0 .02rem;
+      text-align: center;
+      line-height: .2rem;
+      min-width: .2rem;
+      height: .2rem;
+      font-size: .16rem;
+      color: $bgColor;
+      background: $content-highlignt;
+      border-radius: .14rem;
+      transform: scale(50%,50%);
+      transform-origin: left center;
+    }
+  }
+  &__info{
+    flex: 1;
+    font-size: .12rem;
+    color: $content-fontcolor;
+    &__price{
+      font-size: .18rem;
+      color:  $content-highlignt;
+    }
+  }
+  &__btn{
+    width: .98rem;
+    font-size: .14rem;
+    text-align: center;
+    background: #4FB0F9;
+    a{
+      color: $bgColor;
+      text-decoration: none;
+    }
+  }
+}

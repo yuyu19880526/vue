@@ -16,14 +16,33 @@
       </div>
     </div>
     <div class="product">
+      <div class="product__top__title">{{shopName}}</div>
       <div class="product__item" v-for="item in productList" :key="item._id">
         <img class="product__item__img" :src="item.imgUrl" alt="">
         <div class="product__item__detail">
           <h4 class="product__item__title">{{item.name}}</h4>
           <p class="product__item__price">
-            <span class="product__item__yen">&yen;</span>{{item.price}} x {{item.count}}
-            <span class="product__item__total">&yen;</span>{{item.price * item.count}}
+            <span>
+              <span class="product__item__yen">&yen;</span>
+              {{item.price}} x {{item.count}}
+            </span>
+            <span class="product__item__total">
+              <span class="product__item__yen">&yen;</span>
+              {{(item.price * item.count).toFixed(2)}}
+            </span>
           </p>
+        </div>
+      </div>
+    </div>
+    <div class="cart">
+      <div class="check">
+        <div class="check__info">
+          实付金额<span class="check__info__price">&yen;{{computedCart.price}}</span>
+        </div>
+        <div class="check__btn">
+          <router-link :to="{path: `/order-comfirmation/${shopId}`}">
+            提交订单
+          </router-link>
         </div>
       </div>
     </div>
@@ -37,8 +56,8 @@ export default {
   setup () {
     const route = useRoute()
     const shopId = route.params.id
-    const { productList } = useCommonCartEffect(shopId)
-    return { productList }
+    const { productList, shopName, computedCart } = useCommonCartEffect(shopId)
+    return { productList, shopName, computedCart }
   }
 }
 </script>
@@ -113,6 +132,13 @@ export default {
 .product {
   margin: .16rem .18rem .55rem .16rem;
   border-radius: .04rem;
+  &__top{
+    &__title{
+      font-size: .16rem;
+      color: $content-fontcolor;
+      margin: .16rem .16rem .04rem .16rem;
+    }
+  }
   &__item{
     &__detail {
       flex: 1;
@@ -133,6 +159,19 @@ export default {
       text-align: right;
       margin-right: .1rem;
       color: #000;
+    }
+  }
+}
+.check{
+  &__info{
+    margin-left: .24rem;
+    font-size: .14rem;
+    color: $content-fontcolor;
+    &__price{
+      margin-left: .05rem;
+      font-size: .16rem;
+      color: #151515;
+      line-height: .2rem;
     }
   }
 }
