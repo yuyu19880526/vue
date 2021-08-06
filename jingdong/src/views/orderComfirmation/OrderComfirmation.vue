@@ -12,18 +12,39 @@
           <span class="top__receiver__info__name">瑶妹（先生）</span>
           <span class="top__receiver__info__tel">18911024266</span>
         </div>
-        <div class="iconfont top__receiver__enter">&#xe606;</div>
+        <div class="iconfont top__receiver__icon">&#xe606;</div>
+      </div>
+    </div>
+    <div class="product">
+      <div class="product__item" v-for="item in productList" :key="item._id">
+        <img class="product__item__img" :src="item.imgUrl" alt="">
+        <div class="product__item__detail">
+          <h4 class="product__item__title">{{item.name}}</h4>
+          <p class="product__item__price">
+            <span class="product__item__yen">&yen;</span>{{item.price}} x {{item.count}}
+            <span class="product__item__total">&yen;</span>{{item.price * item.count}}
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { useCommonCartEffect } from '../../effect/commonCartEffect'
+import { useRoute } from 'vue-router'
 export default {
-  name: 'OrderComfirmation'
+  name: 'OrderComfirmation',
+  setup () {
+    const route = useRoute()
+    const shopId = route.params.id
+    const { productList } = useCommonCartEffect(shopId)
+    return { productList }
+  }
 }
 </script>
 <style lang="scss" scoped>
 @import '../../style/viriables.scss';
+@import '../shop/shop.scss';
 .wrapper{
   position: fixed;
   left: 0;
@@ -78,6 +99,40 @@ export default {
       &__name{
         margin-right: .06rem;
       }
+    }
+    &__icon{
+      position: absolute;
+      right:  .16rem;
+      top:  .5rem;
+      transform: rotate(180deg);
+      color: $medium-fontColor;
+      font-size:  .2rem;
+    }
+  }
+}
+.product {
+  margin: .16rem .18rem .55rem .16rem;
+  border-radius: .04rem;
+  &__item{
+    &__detail {
+      flex: 1;
+    }
+    &__price{
+      display: flex;
+      font-size: .14rem;
+      line-height: .14rem;
+    }
+    em{
+      display: inline-block;
+      font-style: normal;
+      font-size: .12rem;
+      line-height: .14rem
+    }
+    &__total{
+      flex: 1;
+      text-align: right;
+      margin-right: .1rem;
+      color: #000;
     }
   }
 }

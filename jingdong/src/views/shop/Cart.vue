@@ -75,7 +75,7 @@
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { useCommonCartEffect } from './commonCartEffect'
+import { useCommonCartEffect } from '../../effect/commonCartEffect'
 
 // 购物车相关逻辑
 const useCartEffect = (shopId) => {
@@ -153,6 +153,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/viriables.scss';
 @import '../../style/mixins.scss';
+@import './shop.scss';
 .mask{
   position: fixed;
   left: 0;
@@ -169,107 +170,6 @@ export default {
   bottom: 0;
   z-index: 2;
   background: $bgColor;
-  .product{
-    flex: 1;
-    overflow-y: scroll;
-    background: $bgColor;
-    &__header{
-      height: .52rem;
-      line-height: .52rem;
-      border-bottom: 1px solid $content-bgColor;
-      display: flex;
-      &__all{
-        width: .64rem;
-        margin-left: .16rem;
-        font-size:.14rem;
-      }
-      &__icon{
-        font-size: .2rem;
-        margin-right: .08rem;
-        color: #0091FF;
-      }
-      &__clear{
-        flex: 1;
-        text-align:right;
-        margin-right: .16rem;
-        font-size: .14rem;
-        color: $content-fontcolor;
-      }
-    }
-    &__item{
-      position: relative;
-      display: flex;
-      padding: .12rem 0;
-      margin: 0 .16rem;
-      &__detail{
-        overflow: hidden;
-      }
-      &__icon{
-        line-height: .5rem;
-        margin-right: .16rem;
-        font-size: .2rem;
-        color: #0091FF;
-      }
-      &__img{
-        width: .46rem;
-        height: .46rem;
-        margin-right: .16rem;
-      }
-      &__title{
-        margin: 0;
-        font-size: .14rem;
-        line-height: .2rem;
-        color: $content-fontcolor;
-        @include ellipsis;
-      }
-      &__price{
-        line-height: .2rem;
-        font-size: .14rem;
-        margin: 0.06rem 0 0 0;
-        color: $content-highlignt;
-      }
-      &__yen{
-        font-size: .12rem;
-      }
-      &__origin{
-        font-size: 12px;
-        transform: scale(0.5, 0.5);
-        transform-origin: center top;
-        color: $light-fontColor;
-        text-decoration: line-through;
-        margin-left: .06rem;
-      }
-    }
-    &__number {
-      position: absolute;
-      right: 0;
-      bottom: .12rem;
-      line-height: .16rem;
-      height: .2rem;
-      &__minus, &__plus {
-        display: inline-block;
-        width: .2rem;
-        height: .2rem;
-        border-radius: 50%;
-        font-size: .2rem;
-        text-align: center;
-      }
-      &__minus {
-        border: .01rem solid $medium-fontColor;
-        color: $medium-fontColor;
-        margin-right: .05rem;
-      }
-      &__plus {
-        background: $content-button;
-        border: .01rem solid $content-button;
-        color: $bgColor;
-        margin-left: .05rem;
-        &--dis{
-          background: $light-fontColor;
-        }
-      }
-    }
-  }
 }
 .check{
   display: flex;

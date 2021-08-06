@@ -16,7 +16,7 @@
         v-for="item in contentList"
         :key="item._id"
       >
-        <img class="product__item__img" :src="item.imgUrl" alt="">
+        <img class="product__item__Bigimg" :src="item.imgUrl" alt="">
         <div class="product__item__detail">
           <h4 class="product__item__title">{{item.name}}</h4>
           <p class="product__item__sales">月售{{item.sales}}件</p>
@@ -43,7 +43,7 @@
 </template>
 <script>
 import { reactive, toRefs, ref, watchEffect } from 'vue'
-import { useCommonCartEffect } from './commonCartEffect'
+import { useCommonCartEffect } from '../../effect/commonCartEffect'
 import { useRoute } from 'vue-router'
 import { get } from '../../utils/request'
 
@@ -115,6 +115,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/viriables.scss';
 @import '../../style/mixins.scss';
+@import './shop.scss';
 .content{
   display: flex;
   position: absolute;
@@ -134,83 +135,6 @@ export default {
       color: $content-fontcolor;
       &--active{
         background: $bgColor;
-      }
-    }
-  }
-  .product{
-    flex: 1;
-    overflow-y: scroll;
-    &__item{
-      position: relative;
-      display: flex;
-      padding: .12rem 0;
-      margin: 0 .16rem;
-      border-bottom: .01rem solid $content-bgColor;
-      &__detail{
-        overflow: hidden;
-      }
-      &__img{
-        width: .68rem;
-        height: .68rem;
-        margin-right: .16rem;
-      }
-      &__title{
-        margin: 0;
-        font-size: .14rem;
-        line-height: .2rem;
-        color: $content-fontcolor;
-        @include ellipsis;
-      }
-      &__sales{
-        margin: .06rem 0;
-        font-size: .12rem;
-        line-height: .16rem;
-      }
-      &__price{
-        line-height: .2rem;
-        font-size: .14rem;
-        margin: 0;
-        color: $content-highlignt;
-      }
-      &__yen{
-        font-size: .12rem;
-      }
-      &__origin{
-        font-size: 12px;
-        transform: scale(0.5, 0.5);
-        transform-origin: center top;
-        color: $light-fontColor;
-        text-decoration: line-through;
-        margin-left: .06rem;
-      }
-    }
-    &__number {
-      position: absolute;
-      right: 0;
-      bottom: .12rem;
-      line-height: .16rem;
-      height: .2rem;
-      &__minus, &__plus {
-        display: inline-block;
-        width: .2rem;
-        height: .2rem;
-        border-radius: 50%;
-        font-size: .2rem;
-        text-align: center;
-      }
-      &__minus {
-        border: .01rem solid $medium-fontColor;
-        color: $medium-fontColor;
-        margin-right: .05rem;
-      }
-      &__plus {
-        background: $content-button;
-        border: .01rem solid $content-button;
-        color: $bgColor;
-        margin-left: .05rem;
-        &--dis{
-          background: $light-fontColor;
-        }
       }
     }
   }
