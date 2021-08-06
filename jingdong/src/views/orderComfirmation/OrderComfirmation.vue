@@ -17,20 +17,22 @@
     </div>
     <div class="product">
       <div class="product__top__title">{{shopName}}</div>
-      <div class="product__item" v-for="item in productList" :key="item._id">
-        <img class="product__item__img" :src="item.imgUrl" alt="">
-        <div class="product__item__detail">
-          <h4 class="product__item__title">{{item.name}}</h4>
-          <p class="product__item__price">
-            <span>
-              <span class="product__item__yen">&yen;</span>
-              {{item.price}} x {{item.count}}
-            </span>
-            <span class="product__item__total">
-              <span class="product__item__yen">&yen;</span>
-              {{(item.price * item.count).toFixed(2)}}
-            </span>
-          </p>
+      <div class="product__list">
+        <div class="product__item" v-for="item in productList" :key="item._id">
+          <img class="product__item__img" :src="item.imgUrl" alt="">
+          <div class="product__item__detail">
+            <h4 class="product__item__title">{{item.name}}</h4>
+            <p class="product__item__price">
+              <span>
+                <span class="product__item__yen">&yen;</span>
+                {{item.price}} x {{item.count}}
+              </span>
+              <span class="product__item__total">
+                <span class="product__item__yen">&yen;</span>
+                {{(item.price * item.count).toFixed(2)}}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -141,6 +143,17 @@ export default {
 .product {
   margin: .16rem .18rem .55rem .16rem;
   border-radius: .04rem;
+  position: relative;
+  height: 100%;
+  &__list{
+    position: absolute;
+    left:0;
+    right: 0;
+    bottom: .6rem;
+    top: .32rem;
+    overflow-y: scroll;
+    height: 100%;
+  }
   &__top{
     &__title{
       font-size: .16rem;
