@@ -8,11 +8,7 @@ const setLocalCartList = (state) => {
 
 const getLocalCartList = () => {
   // {shopId: {shopName: '', productList: {}}}
-  try {
-    return JSON.parse(localStorage.getItem('cartList'))
-  } catch (e) {
-    return {}
-  }
+  return JSON.parse(localStorage.getItem('cartList')) || {}
 }
 
 export default createStore({
@@ -21,6 +17,7 @@ export default createStore({
   },
   mutations: {
     changeCartItemInfo (state, payload) {
+      console.log(777)
       const { shopId, productId, productInfo, number } = payload
       let shopInfo = state.cartList[shopId]
       if (!shopInfo) {
@@ -39,6 +36,7 @@ export default createStore({
       if (product.count < 0) { product.count = 0 }
       if (product.count > productInfo.sales) { product.count = productInfo.sales }
       shopInfo.productList[productId] = product
+      console.log(state.cartList)
       state.cartList[shopId] = shopInfo
       setLocalCartList(state)
     },
