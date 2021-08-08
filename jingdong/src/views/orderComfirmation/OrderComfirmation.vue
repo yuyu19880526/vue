@@ -10,7 +10,7 @@ import { useCommonCartEffect } from '../../effect/commonCartEffect'
 import { useRoute } from 'vue-router'
 import TopArea from './TopArea'
 import Order from './Order'
-import ProductList from './ProductList'
+import ProductList from '../../components/ProductList'
 
 export default {
   name: 'OrderComfirmation',

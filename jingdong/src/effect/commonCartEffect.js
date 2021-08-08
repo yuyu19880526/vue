@@ -21,7 +21,6 @@ export const useCommonCartEffect = (shopId) => {
         notEmptyProduct[i] = product
       }
     }
-    console.log(notEmptyProduct)
     return notEmptyProduct
   })
 
