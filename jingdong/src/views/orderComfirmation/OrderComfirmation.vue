@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <TopArea />
-    <ProductList :shopNam="shopName" :productList="productList"/>
+    <ProductList :shopName="shopName" :productList="productList"/>
     <Order :shopId="shopId" :price="computedCart.price"/>
   </div>
 </template>
