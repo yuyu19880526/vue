@@ -37,4 +37,13 @@ export default {
   background-color: #eee;
   overflow-y: scroll;
 }
+.product__wrapper {
+  overflow-y: scroll;
+  margin: 0 .18rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: .6rem;
+  top: 2.6rem;
+}
 </style>
