@@ -1,18 +1,18 @@
 <template>
-<div class="mask">
-  <div class="mask__content">
+<div class="mask" v-if="showConfirm" @click="() => {showConfirm = false}">
+  <div class="mask__content" @click.stop>
     <h3 class="mask__content__title">确认要离开收银台？</h3>
     <p class="mask__content__desc">请尽快完成支付，否则将被取消</p>
     <div class="mask__content_btns">
       <div
         class="mask__content__btn mask__content__btn--first"
-        @click="handleCancleOrder"
+        @click="() => handleConfirmOrder(true)"
       >
         取消订单
       </div>
       <div
         class="mask__content__btn mask__content__btn--last"
-        @click="handleConfirmOrder"
+        @click="() => handleConfirmOrder(false)"
       >
         确认支付
       </div>
@@ -24,24 +24,25 @@
       <div class="check__info">
         实付金额<span class="check__info__price">&yen;<b>{{price}}</b></span>
       </div>
-      <div class="check__btn">
-        <router-link :to="{path: `/shop`}">
-          提交订单
-        </router-link>
+      <div class="check__btn" @click="() => {showConfirm = true}">
+        提交订单
       </div>
     </div>
   </div>
 </template>
 <script>
+import { ref } from 'vue'
 import { post } from '../../utils/request'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import { useCommonCartEffect } from '../../effect/commonCartEffect'
 
-const orderEffect = (shopId) => {
+const orderEffect = (shopId, isCancled) => {
+  const router = useRouter()
+  const store = useStore()
   const { shopName, productList } = useCommonCartEffect(shopId)
-  const handleCancleOrder = () => {
-    console.log(777)
-  }
-  const handleConfirmOrder = async () => {
+  const showConfirm = ref(false)
+  const handleConfirmOrder = async (isCancled) => {
     const products = []
     for (const i in productList.value) {
       products.push({
@@ -54,25 +55,26 @@ const orderEffect = (shopId) => {
         addressId: 1,
         shopId,
         shopName: shopName.value,
-        isCanceled: false,
+        isCanceled: isCancled,
         products: products
       })
       if (result?.errno === 0) {
         console.log('提交成功')
+        router.push({ name: 'Home' })
+        store.commit('clearCartData', shopId)
       }
     } catch (e) {
       console.log(2323)
     }
   }
-  return { handleCancleOrder, handleConfirmOrder }
+  return { handleConfirmOrder, showConfirm }
 }
 export default {
   name: 'Order',
   props: ['price', 'shopId'],
-  setup (props) {
-    console.log(props)
-    const { handleCancleOrder, handleConfirmOrder } = orderEffect(props.shopId)
-    return { handleCancleOrder, handleConfirmOrder }
+  setup (props, context) {
+    const { handleConfirmOrder, showConfirm } = orderEffect(props.shopId, context.isCancled)
+    return { handleConfirmOrder, showConfirm }
   }
 }
 </script>
@@ -142,6 +144,9 @@ export default {
       color: #151515;
       line-height: .2rem;
     }
+  }
+  &__btn{
+    color: $bgColor;
   }
 }
 </style>

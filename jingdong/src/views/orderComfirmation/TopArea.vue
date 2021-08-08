@@ -21,6 +21,7 @@ import { useRouter } from 'vue-router'
 const useBackEffect = (shopId) => {
   const router = useRouter()
   const handleBack = () => {
+    console.log(777)
     router.push({ path: `/shop/${shopId}` })
   }
   return { handleBack }
@@ -28,7 +29,7 @@ const useBackEffect = (shopId) => {
 export default {
   name: 'TopArea',
   setup () {
-    const { handleBack } = useBackEffect
+    const { handleBack } = useBackEffect()
     return { handleBack }
   }
 }

@@ -13,8 +13,16 @@ export const useCommonCartEffect = (shopId) => {
   }
   // 获取product
   const productList = computed(() => {
-    const productList = cartList?.[shopId]?.productList || []
-    return productList
+    const productList = cartList?.[shopId]?.productList || {}
+    const notEmptyProduct = {}
+    for (const i in productList) {
+      const product = productList[i]
+      if (product.count > 0) {
+        notEmptyProduct[i] = product
+      }
+    }
+    console.log(notEmptyProduct)
+    return notEmptyProduct
   })
 
   // 获取shopName

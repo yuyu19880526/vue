@@ -19,41 +19,40 @@
           <span @click="()=>cleanCartProduct(shopId)">清空购物车</span>
         </div>
       </div>
-      <template
+      <div
+        class="product__item"
         v-for="item in productList"
         :key="item._id"
       >
-        <div class="product__item" v-if="item.count > 0">
-          <div
-            v-html="item.check ? '&#xe652;': '&#xe615;'"
-            :class="{
-              'product__item__icon': true,
-              'iconfont':true,
-              'product__item__icon--nocheck': !item.check
-            }"
-            @click="() => changeCartItemChecked(shopId, item._id)"
-          />
-          <img class="product__item__img" :src="item.imgUrl" alt="">
-          <div class="product__item__detail">
-            <h4 class="product__item__title">{{item.name}}</h4>
-            <p class="product__item__price">
-              <span class="product__item__yen">&yen;</span>{{item.price}}
-              <span class="product__item__origin">{{item.oldPrice}}</span>
-            </p>
-          </div>
-          <div class="product__number">
-            <span
-              class="product__number__minus"
-              @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }"
-            >-</span>
-            {{ item.count || 0 }}
-            <span
-              :class="{'product__number__plus': true, 'product__number__plus--dis': item.count >= item.sales}"
-              @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }"
-            >+</span>
-          </div>
+        <div
+          v-html="item.check ? '&#xe652;': '&#xe615;'"
+          :class="{
+            'product__item__icon': true,
+            'iconfont':true,
+            'product__item__icon--nocheck': !item.check
+          }"
+          @click="() => changeCartItemChecked(shopId, item._id)"
+        />
+        <img class="product__item__img" :src="item.imgUrl" alt="">
+        <div class="product__item__detail">
+          <h4 class="product__item__title">{{item.name}}</h4>
+          <p class="product__item__price">
+            <span class="product__item__yen">&yen;</span>{{item.price}}
+            <span class="product__item__origin">{{item.oldPrice}}</span>
+          </p>
         </div>
-      </template>
+        <div class="product__number">
+          <span
+            class="product__number__minus"
+            @click="() => { changeCartItemInfo(shopId, item._id, item, -1) }"
+          >-</span>
+          {{ item.count || 0 }}
+          <span
+            :class="{'product__number__plus': true, 'product__number__plus--dis': item.count >= item.sales}"
+            @click="() => { changeCartItemInfo(shopId, item._id, item, 1) }"
+          >+</span>
+        </div>
+      </div>
     </div>
     <div class="check">
       <div class="check__icon" @click="handleShowCartlist">
@@ -72,7 +71,7 @@
   </div>
 </template>
 <script>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { useCommonCartEffect } from '../../effect/commonCartEffect'
@@ -89,10 +88,10 @@ const useCartEffect = (shopId) => {
   }
 
   // 购物车内容
-  const productList = computed(() => {
-    const productList = cartList?.[shopId]?.productList || []
-    return productList
-  })
+  // const productList = computed(() => {
+  //   const productList = cartList?.[shopId]?.productList || []
+  //   return productList
+  // })
   // 购物车勾选
   const changeCartItemChecked = (shopId, productId) => {
     store.commit('changeCartItemChecked', { shopId, productId })
@@ -106,15 +105,15 @@ const useCartEffect = (shopId) => {
   const setCartItemCheck = (shopId) => {
     store.commit('setCartItemCheck', { shopId })
   }
-  return { cartList, productList, changeCartItemChecked, cleanCartProduct, setCartItemCheck, showCartList, handleShowCartlist }
+  return { cartList, changeCartItemChecked, cleanCartProduct, setCartItemCheck, showCartList, handleShowCartlist }
 }
 export default {
   name: 'Cart',
   setup () {
     const route = useRoute()
     const shopId = route.params.id
-    const { cartList, productList, changeCartItemChecked, cleanCartProduct, setCartItemCheck, showCartList, handleShowCartlist } = useCartEffect(shopId)
-    const { changeCartItemInfo, computedCart } = useCommonCartEffect(shopId)
+    const { cartList, changeCartItemChecked, cleanCartProduct, setCartItemCheck, showCartList, handleShowCartlist } = useCartEffect(shopId)
+    const { changeCartItemInfo, computedCart, productList } = useCommonCartEffect(shopId)
     return {
       cartList,
       computedCart,
