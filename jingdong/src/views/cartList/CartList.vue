@@ -1,9 +1,11 @@
 <template>
   <div class="wrapper">
     <div class="title">我的全部购物车（2）</div>
-    <template v-for="(item, index) in products" :key="index">
-      <ProductList :shopName="item.shopName" :productList="item['productsList']"/>
-    </template>
+    <div class="wrapper--product--box">
+      <template v-for="(item, index) in products" :key="index">
+        <ProductList :shopName="item.shopName" :productList="item['productsList']"/>
+      </template>
+    </div>
   </div>
   <Docker :currentIndex="1"/>
 </template>
@@ -48,5 +50,12 @@ export default {
   font-size: .16rem;
   color: $content-fontcolor;
   text-align: center;
+}
+.wrapper--product--box{
+  position: absolute;
+  left:0;
+  right:0;
+  top: .4rem;
+  bottom: 0;
 }
 </style>
