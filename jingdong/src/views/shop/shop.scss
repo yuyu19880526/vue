@@ -6,7 +6,7 @@
   &__header{
     height: .52rem;
     line-height: .52rem;
-    border-bottom: 1px solid $content-bgColor;
+    border-bottom: .01rem solid $content-bgColor;
     display: flex;
     &__all{
       width: .64rem;
@@ -67,7 +67,7 @@
       font-size: .12rem;
     }
     &__origin{
-      font-size: 12px;
+      font-size: .12rem;
       transform: scale(0.5, 0.5);
       transform-origin: center top;
       color: $light-fontColor;

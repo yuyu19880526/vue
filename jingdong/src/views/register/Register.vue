@@ -117,13 +117,14 @@ export default {
     background: $content-input;
     padding: 0 .16rem;
     border-radius: .06rem;
-    border: 1px solid $content-inputBoder;
+    border: .01rem solid $content-inputBoder;
     &__content{
       width: 100%;
       border: none;
       outline: none;
       background: none;
-      line-height: .48rem;
+      margin-top: .12rem;
+      line-height: .22rem;
       font-size: .16rem;
       &::placeholder{
         color: $content-inputPlaceholder;

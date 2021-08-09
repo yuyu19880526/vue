@@ -120,7 +120,7 @@ export default {
       line-height: .32rem;
       text-align: center;
       border-radius: .16rem;
-      border: 1px solid #4FB0F9;
+      border: .01rem solid #4FB0F9;
       font-size: .14rem;
       &--first{
         margin-right: .24rem;
