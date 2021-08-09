@@ -57,5 +57,6 @@ export default {
   right:0;
   top: .4rem;
   bottom: 0;
+  overflow-y: scroll;
 }
 </style>
