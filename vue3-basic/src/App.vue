@@ -1,5 +1,7 @@
 <template>
   <div id="nav">
+    <button @click="openModal">打开弹框</button>
+    <Modal :isOpen="IsOpen" @close-modal="closeModal">my modal</Modal>
     <h1>{{count}}</h1>
     <h1>{{double}}</h1>
     <div>
@@ -11,8 +13,10 @@
   <router-view/>
 </template>
 <script lang="ts">
-import { defineComponent, computed, reactive, toRefs } from 'vue'
+import { defineComponent, computed, reactive, toRefs, ref } from 'vue'
 import { useMousePosition } from './hooks/useMousePosition'
+import Modal from './components/modal.vue'
+
 interface DataProps {
   count: number,
   double: number,
@@ -33,12 +37,26 @@ const useAddCountEffect = () => {
   return { refData }
 }
 
+const useModalEffect = () => {
+  const IsOpen = ref(false)
+  const openModal = () => {
+    IsOpen.value = true
+  }
+  const closeModal = () => {
+    IsOpen.value = false
+  }
+  return { IsOpen, openModal, closeModal }
+}
 export default defineComponent({
   name: 'App',
+  components: {
+    Modal
+  },
   setup () {
     const { refData } = useAddCountEffect()
     const { x, y } = useMousePosition()
-    return { ...refData, x, y }
+    const { IsOpen, openModal, closeModal } = useModalEffect()
+    return { ...refData, x, y, IsOpen, openModal, closeModal }
   },
 })
 </script>
