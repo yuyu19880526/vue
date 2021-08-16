@@ -19,10 +19,10 @@
 import { defineComponent, PropType, computed } from 'vue'
 
 export interface ColumProps {
-  id: number,
-  title: string,
-  avatar?: string,
-  description: string
+  id: number;
+  title: string;
+  avatar?: string;
+  description: string;
 }
 
 export default defineComponent({
