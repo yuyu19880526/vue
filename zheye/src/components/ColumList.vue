@@ -25,18 +25,6 @@ export interface ColumProps {
   description: string
 }
 
-const useComputedColumnlist = (props) => {
-  const columnList = computed(() => {
-    const result = props.list.map(item => {
-      if (!item.avatar) {
-        item.avatar = require('@/assets/column.jpg')
-      }
-      return item
-    })
-    return result
-  })
-  return { columnList }
-}
 export default defineComponent({
   name: 'ColumList',
   props: {
@@ -46,7 +34,15 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const { columnList } = useComputedColumnlist(props)
+    const columnList = computed(() => {
+      const result = props.list.map(item => {
+        if (!item.avatar) {
+          item.avatar = require('@/assets/column.jpg')
+        }
+        return item
+      })
+      return result
+    })
     return { columnList }
   }
 })
