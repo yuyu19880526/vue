@@ -16,7 +16,7 @@ import mitt from 'mitt'
 type ValidateFunc = () => boolean
 
 type Events = {
-  formItemcreated: () => boolean
+  'form-item-created': () => boolean
 }
 
 export const emitter = mitt<Events>()
@@ -34,9 +34,9 @@ export default defineComponent({
         funcArr.push(func)
       }
     }
-    emitter.on('formItemcreated', callback)
+    emitter.on('form-item-created', callback)
     onUnmounted(() => {
-      emitter.off('formItemcreated', callback)
+      emitter.off('form-item-created', callback)
       funcArr = []
     })
     return {
