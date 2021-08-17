@@ -1,17 +1,23 @@
 <template>
   <div class="container">
-    <login />
+    <form autocomplete="off">
+      <div class="mb-3">
+        <label for="exampleInputEmail1">邮箱地址</label>
+        <validate-input :rules="emailRules" v-model="emailVal"/>
+        {{ emailVal }}
+      </div>
+    </form>
     <global-header :user="user"/>
     <colum-list :list="testData"/>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumList, { ColumProps } from './components/ColumList.vue'
 import GlobalHeader, { UseProps } from './components/GlobalHeader.vue'
-import login from './views/login.vue'
+import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
 
 const testData:ColumProps[] = [
   {
@@ -47,9 +53,15 @@ const user: UseProps = {
 }
 export default defineComponent({
   name: 'App',
-  components: { ColumList, GlobalHeader, login },
+  components: { ColumList, GlobalHeader, ValidateInput },
   setup () {
-    return { testData, user }
+    const emailVal = ref('abc@.com')
+    const emailRules:RulesProp = [
+      { type: 'required', message: '电子邮箱地址不能为空' },
+      { type: 'email', message: '请输入正确的电子邮箱格式' }
+    ]
+    console.log(emailVal.value)
+    return { testData, user, emailRules, emailVal }
   }
 })
 </script>
