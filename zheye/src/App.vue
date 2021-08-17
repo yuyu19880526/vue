@@ -3,7 +3,7 @@
     <form autocomplete="off">
       <div class="mb-3">
         <label for="exampleInputEmail1">邮箱地址</label>
-        <validate-input :rules="emailRules" v-model="emailVal"/>
+        <validate-input :rules="emailRules" v-model="emailVal" placeholder="请输入邮箱地址"/>
         {{ emailVal }}
       </div>
     </form>
@@ -55,7 +55,7 @@ export default defineComponent({
   name: 'App',
   components: { ColumList, GlobalHeader, ValidateInput },
   setup () {
-    const emailVal = ref('abc@.com')
+    const emailVal = ref('')
     const emailRules:RulesProp = [
       { type: 'required', message: '电子邮箱地址不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }
