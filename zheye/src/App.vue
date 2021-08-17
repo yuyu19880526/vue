@@ -1,14 +1,18 @@
 <template>
   <div class="container">
-    <form autocomplete="off">
+    <global-header :user="user"/>
+    <validate-form autocomplete="off" @form-submit="onFormSubmit">
       <div class="mb-3">
         <label for="exampleInputEmail1">邮箱地址</label>
         <validate-input :rules="emailRules" v-model="emailVal" placeholder="请输入邮箱地址"/>
-        {{ emailVal }}
       </div>
-    </form>
-    <global-header :user="user"/>
-    <colum-list :list="testData"/>
+      <template #submit>
+        <span class="btn btn-danger">Submit</span>
+      </template>
+    </validate-form>
+    <div style="display:none">
+      <colum-list :list="testData"/>
+    </div>
   </div>
 </template>
 
@@ -18,6 +22,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumList, { ColumProps } from './components/ColumList.vue'
 import GlobalHeader, { UseProps } from './components/GlobalHeader.vue'
 import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
+import ValidateForm from './components/ValidateForm.vue'
 
 const testData:ColumProps[] = [
   {
@@ -53,15 +58,17 @@ const user: UseProps = {
 }
 export default defineComponent({
   name: 'App',
-  components: { ColumList, GlobalHeader, ValidateInput },
+  components: { ColumList, GlobalHeader, ValidateInput, ValidateForm },
   setup () {
     const emailVal = ref('')
     const emailRules:RulesProp = [
       { type: 'required', message: '电子邮箱地址不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }
     ]
-    console.log(emailVal.value)
-    return { testData, user, emailRules, emailVal }
+    const onFormSubmit = (result: boolean) => {
+      console.log('1234', result)
+    }
+    return { testData, user, emailRules, emailVal, onFormSubmit }
   }
 })
 </script>
