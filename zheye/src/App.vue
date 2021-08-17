@@ -6,6 +6,15 @@
         <label for="exampleInputEmail1">邮箱地址</label>
         <validate-input :rules="emailRules" v-model="emailVal" placeholder="请输入邮箱地址"/>
       </div>
+      <div class="mb-3">
+        <label class="form-label">密码</label>
+        <validate-input
+          type="password"
+          placeholder="请输入密码"
+          :rules="passwordRules"
+          v-model="passwordVal"
+        />
+      </div>
       <template #submit>
         <span class="btn btn-danger">Submit</span>
       </template>
@@ -61,14 +70,18 @@ export default defineComponent({
   components: { ColumList, GlobalHeader, ValidateInput, ValidateForm },
   setup () {
     const emailVal = ref('')
+    const passwordVal = ref('')
     const emailRules:RulesProp = [
       { type: 'required', message: '电子邮箱地址不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }
     ]
+    const passwordRules: RulesProp = [
+      { type: 'required', message: '密码不能为空' }
+    ]
     const onFormSubmit = (result: boolean) => {
       console.log('1234', result)
     }
-    return { testData, user, emailRules, emailVal, onFormSubmit }
+    return { testData, user, emailRules, passwordRules, emailVal, passwordVal, onFormSubmit }
   }
 })
 </script>

@@ -13,7 +13,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, PropType, reactive, onMounted } from 'vue'
+import { emitter } from './ValidateForm.vue'
 
 interface RuleProp {
   type: 'required' | 'email' |'range' |'phone';
@@ -59,13 +60,18 @@ export default defineComponent({
           return passed
         })
         inputRef.error = !allPassed
+        return allPassed
       }
+      return true
     }
     const updateValue = (e: KeyboardEvent) => {
       const targetValue = (e.target as HTMLInputElement).value
       inputRef.val = targetValue
       context.emit('update:modelValue', targetValue)
     }
+    onMounted(() => {
+      emitter.emit('formItemcreated', validateInput)
+    })
     return {
       inputRef,
       validateInput,
