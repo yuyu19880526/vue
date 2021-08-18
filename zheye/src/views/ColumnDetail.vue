@@ -17,14 +17,15 @@
 import { defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import PostList from '../components/PostList.vue'
-import { testData, testPosts } from '../api/testData'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   components: { PostList },
   setup () {
     const router = useRoute()
+    const store = useStore()
     const currentId = parseInt(router.params.id)
-    const column = testData.find(item => {
+    const column = store.state.columnList.find(item => {
       if (item.id === currentId) {
         if (!item.avatar) {
           item.avatar = require('@/assets/column.jpg')
@@ -32,7 +33,7 @@ export default defineComponent({
         return item
       }
     })
-    const list = testPosts.filter(post => post.columnId === currentId)
+    const list = store.state.postList.filter(post => post.columnId === currentId)
     return { column, list }
   }
 })

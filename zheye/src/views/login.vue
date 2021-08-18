@@ -23,30 +23,15 @@
 import { defineComponent, ref } from 'vue'
 import ValidateInput, { RulesProp } from '../components/ValidateInput.vue'
 import ValidateForm from '../components/ValidateForm.vue'
-
-// const emailReg = /^[A-Za-zd0-9]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/
-// const useEmailEffect = () => {
-//   const emailRef = reactive({
-//     val: '',
-//     error: false,
-//     message: ''
-//   })
-//   const validateEmail = () => {
-//     if (emailRef.val.trim() === '') {
-//       emailRef.error = true
-//       emailRef.message = 'emial不能为空'
-//     } else if (!emailReg.test(emailRef.val)) {
-//       emailRef.error = true
-//       emailRef.message = '请输入正确的email'
-//     }
-//   }
-//   return { emailRef, validateEmail }
-// }
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Login',
   components: { ValidateInput, ValidateForm },
   setup () {
+    const store = useStore()
+    const router = useRouter()
     const emailVal = ref('')
     const passwordVal = ref('')
     const emailRules:RulesProp = [
@@ -58,6 +43,10 @@ export default defineComponent({
     ]
     const onFormSubmit = (result: boolean) => {
       console.log('1234', result)
+      if (result) {
+        router.push('/')
+        store.commit('login')
+      }
     }
     return { emailRules, passwordRules, emailVal, passwordVal, onFormSubmit }
   }
