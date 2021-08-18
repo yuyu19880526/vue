@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import PostList from '../components/PostList.vue'
 import { useStore } from 'vuex'
@@ -22,18 +22,20 @@ import { useStore } from 'vuex'
 export default defineComponent({
   components: { PostList },
   setup () {
-    const router = useRoute()
+    const route = useRoute()
     const store = useStore()
-    const currentId = parseInt(router.params.id)
-    const column = store.state.columnList.find(item => {
-      if (item.id === currentId) {
-        if (!item.avatar) {
-          item.avatar = require('@/assets/column.jpg')
-        }
-        return item
-      }
-    })
-    const list = store.state.postList.filter(post => post.columnId === currentId)
+    const currentId = +route.params.id
+    // const column = store.state.columnList.find(item => {
+    //   if (item.id === currentId) {
+    //     if (!item.avatar) {
+    //       item.avatar = require('@/assets/column.jpg')
+    //     }
+    //     return item
+    //   }
+    // })
+    // const list = store.state.postList.filter(post => post.columnId === currentId)
+    const column = computed(() => store.getters.getColumnById(currentId))
+    const list = computed(() => store.getters.getPostById(currentId))
     return { column, list }
   }
 })

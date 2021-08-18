@@ -29,5 +29,13 @@ export default createStore<storeProps>({
   actions: {
   },
   modules: {
+  },
+  getters: {
+    getColumnById: (state) => (id: number) => {
+      return state.columnList.find(c => c.id === id)
+    },
+    getPostById: (state) => (cid: number) => {
+      return state.postList.filter(c => c.columnId === cid)
+    }
   }
 })
