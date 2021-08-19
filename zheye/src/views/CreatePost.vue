@@ -50,7 +50,7 @@ export default defineComponent({
     const contentRules:RulesProp = [
       { type: 'required', message: '文章内容不能为空' }
     ]
-    const onFormSubmit = (result) => {
+    const onFormSubmit = (result:boolean):void => {
       const obj = {
         id: new Date().getTime(),
         title: titleVal.value,

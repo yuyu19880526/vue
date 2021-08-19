@@ -16,7 +16,7 @@
         <Dropdown :title="`你好，${ user.name }`">
           <DropdownItem><router-link class="dropdown-item" to="/create">新建文章</router-link></DropdownItem>
           <DropdownItem disabled><a class="dropdown-item" href="#">管理账户</a></DropdownItem>
-          <DropdownItem><a class="dropdown-item" href="#">退出登录</a></DropdownItem>
+          <DropdownItem @click="logout"><a class="dropdown-item" href="#">退出登录</a></DropdownItem>
         </Dropdown>
       </li>
     </ul>
@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import { useStore } from 'vuex'
 import Dropdown from './Dropdown.vue'
 import DropdownItem from './DropdownItem.vue'
 
@@ -45,6 +46,13 @@ export default defineComponent({
   components: {
     Dropdown,
     DropdownItem
+  },
+  setup () {
+    const store = useStore()
+    const logout = () => {
+      store.commit('logout')
+    }
+    return { logout }
   }
 })
 </script>
