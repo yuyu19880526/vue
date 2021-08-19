@@ -14,7 +14,7 @@
     <ul v-if="user.isLogin" class="list-inline mb-0">
       <li class="list-inline-item">
         <Dropdown :title="`你好，${ user.name }`">
-          <DropdownItem><a class="dropdown-item" href="#">新建文章</a></DropdownItem>
+          <DropdownItem><router-link class="dropdown-item" to="/create">新建文章</router-link></DropdownItem>
           <DropdownItem disabled><a class="dropdown-item" href="#">管理账户</a></DropdownItem>
           <DropdownItem><a class="dropdown-item" href="#">退出登录</a></DropdownItem>
         </Dropdown>

@@ -24,6 +24,9 @@ export default createStore<storeProps>({
     login (state) {
       state.user = { ...state.user, isLogin: true, name: 'mm', id: 2 }
       console.log(state.user)
+    },
+    createPost (state, payload) {
+      state.postList.push(payload)
     }
   },
   actions: {

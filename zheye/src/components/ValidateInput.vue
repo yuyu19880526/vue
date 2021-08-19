@@ -1,13 +1,22 @@
 <template>
   <div class="validate-input-container pb-3">
-    <input type="text"
+    <input
+      v-if="tag === 'text'"
       class="form-control"
       :class="{'is-invalid': inputRef.error}"
-      :value="inputRef.val"
+      v-model="inputRef.val"
       @blur="validateInput"
-      @input="updateValue"
       v-bind="$attrs"
     >
+    <textarea
+      v-else
+      class="form-control"
+      :class="{'is-invalid': inputRef.error}"
+      v-model="inputRef.val"
+      @blur="validateInput"
+      v-bind="$attrs"
+    >
+    </textarea>
     <span v-if="inputRef.error" class="invalid-feedback">{{ inputRef.message }}</span>
   </div>
 </template>
@@ -22,6 +31,7 @@ interface RuleProp {
 }
 
 export type RulesProp = RuleProp[]
+export type Type = 'input' | 'textarea'
 
 const emailReg = /^[A-Za-zd0-9]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/
 const phoneReg = /^1(3|4|5|6|7|8|9)\d{9}$/
@@ -30,10 +40,14 @@ export default defineComponent({
   name: 'ValidateInput',
   props: {
     rules: Array as PropType<RulesProp>,
-    modelValue: String
+    modelValue: String,
+    tag: {
+      type: String as PropType<Type>,
+      default: 'text'
+    }
   },
   inheritAttrs: false,
-  setup (props, context) {
+  setup (props) {
     const inputRef = reactive({
       val: props.modelValue || '',
       error: false,
@@ -64,18 +78,17 @@ export default defineComponent({
       }
       return true
     }
-    const updateValue = (e: KeyboardEvent) => {
-      const targetValue = (e.target as HTMLInputElement).value
-      inputRef.val = targetValue
-      context.emit('update:modelValue', targetValue)
-    }
+    // const updateValue = (e: KeyboardEvent) => {
+    //   const targetValue = (e.target as HTMLInputElement).value
+    //   inputRef.val = targetValue
+    //   context.emit('update:modelValue', targetValue)
+    // }
     onMounted(() => {
       emitter.emit('form-item-created', validateInput)
     })
     return {
       inputRef,
-      validateInput,
-      updateValue
+      validateInput
     }
   }
 })

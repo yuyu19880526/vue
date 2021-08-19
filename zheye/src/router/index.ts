@@ -24,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/column-detail/:id',
     name: 'ColumnDetail',
     component: () => import(/* webpackChunkName: "column-detail" */'../views/ColumnDetail.vue')
+  },
+  {
+    path: '/create',
+    name: 'CreatePost',
+    component: () => import(/* webpackChunkName: "create" */'../views/CreatePost.vue')
   }
 ]
 

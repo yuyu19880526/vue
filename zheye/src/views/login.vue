@@ -42,7 +42,6 @@ export default defineComponent({
       { type: 'required', message: '密码不能为空' }
     ]
     const onFormSubmit = (result: boolean) => {
-      console.log('1234', result)
       if (result) {
         router.push('/')
         store.commit('login')
