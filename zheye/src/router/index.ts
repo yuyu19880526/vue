@@ -18,7 +18,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */'../views/Login.vue')
+    component: () => import(/* webpackChunkName: "login" */'../views/Login.vue'),
+    beforeEnter (to, from, next) {
+      const isLogin = localStorage && localStorage.user
+      isLogin ? next({ name: 'Home' }) : next()
+    }
   },
   {
     path: '/column-detail/:id',
@@ -38,7 +42,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  ((localStorage && localStorage.getItem('user')) || to.name === 'Login') ? next() : next({ name: 'Login' })
+  const isLogin = localStorage && localStorage.user
+  const { name } = to
+  const isLoginOrisRegister = (name === 'Login' || name === 'Register');
+  (isLogin || isLoginOrisRegister) ? next() : next({ name: 'Login' })
 })
 
 export default router
