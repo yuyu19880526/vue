@@ -17,7 +17,6 @@ export default createStore({
   },
   mutations: {
     changeCartItemInfo (state, payload) {
-      console.log(777)
       const { shopId, productId, productInfo, number } = payload
       let shopInfo = state.cartList[shopId]
       if (!shopInfo) {
