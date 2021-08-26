@@ -37,18 +37,21 @@
 
 8)配置package.json  
 
+```javascript
 "scripts": {
     "start": "nodemon --watch src/ -e ts --exec ts-node ./src/index.ts"
-}  
+}
+```
 
-9) npm install parcel-bundler --save-dev 安装parcel-bundler  
+9)npm install parcel-bundler --save-dev 安装parcel-bundler  
 
 10）在根目录新建index.html文件，将index.ts引入  
 
 11）配置package.json文件，并启动  
 
+```javascript
 "scripts": {
     "startparcel": "parcel ./index.html",
     "start": "nodemon --watch src/ -e ts --exec ts-node ./src/index.ts"
-  }  
-  
+  }
+```
