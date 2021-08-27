@@ -1,3 +1,4 @@
+// 函数重载
 type messageType = "audio" | "image" | string
 
 interface messageProp {
