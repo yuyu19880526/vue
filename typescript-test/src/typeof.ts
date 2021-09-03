@@ -29,7 +29,7 @@ let test: TestInter = {
   allowinput: 1
 }
 
-function processObjOutput(obj:any):void {
+function processObjOutput(obj:any) {
   const objArr = Object.keys(obj)
   if (obj && obj.allowinput === 1 && objArr.length > 0) {
     let value
