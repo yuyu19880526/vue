@@ -30,8 +30,8 @@ let test: TestInter = {
 }
 
 function processObjOutput(obj:any) {
-  const objArr = Object.keys(obj)
-  if (obj && obj.allowinput === 1 && objArr.length > 0) {
+  if (typeof obj === 'object' && obj && obj.allowinput === 1 && Object.keys(obj).length > 0) {
+    const objArr = Object.keys(obj)
     let value
     objArr.forEach(key => {
       value = obj[key]
