@@ -18,6 +18,23 @@ class StaticUtil {
   public static trimSpace (str: string) {
     return str.replace(/\s+/g,'')
   }
+  public static processObj(obj: any) {
+    if(obj && obj.allowinput === 1) {
+      let value
+      Object.keys(obj).forEach(key => {
+        value = obj[key]
+        if (typeof value === 'string'){
+          console.log('stringvalue:' + StaticUtil.trimSpace(value))
+        } else if(typeof value === 'function'){
+          obj[key]()
+        } else {
+          console.log('value:' + value )
+        }
+      })
+    } else {
+      console.log('不是一个合法的对象')
+    }
+  }
 }
 
 let test: TestInter = {
@@ -29,6 +46,7 @@ let test: TestInter = {
   allowinput: 1
 }
 
+<<<<<<< HEAD
 function processObjOutput(obj:any) {
   if (typeof obj === 'object' && obj && obj.allowinput === 1 && Object.keys(obj).length > 0) {
     const objArr = Object.keys(obj)
@@ -48,3 +66,24 @@ function processObjOutput(obj:any) {
   }
 }
 processObjOutput(test)
+=======
+// function processObjOutput(obj:any) {
+//   const objArr = Object.keys(obj)
+//   if (obj && obj.allowinput === 1 && objArr.length > 0) {
+//     let value
+//     objArr.forEach(key => {
+//       value = obj[key]
+//       if (typeof(value) === 'string') {
+//         console.log(StaticUtil.trimSpace(value))
+//       } else if (typeof value === 'function') {
+//         obj[key]()
+//       } else {
+//         console.log(value)
+//       }
+//     })
+//   } else {
+//     console.log('不是一个合法的对象。')
+//   }
+// }
+StaticUtil.processObj({name: 'xxs   x', allowinput: 1})
+>>>>>>> 69105f0358ee3b526a6022bfe2fa470df5a963a3
