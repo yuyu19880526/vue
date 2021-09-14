@@ -48,6 +48,7 @@ let sum = arr.reduce((pre, cur, index, array) => {
 }, 0)
 console.log(sum)
 
+// indexOf 和include 区别，indexOf 无法返回NaN结果  include可以
 // 返回计算结果，用于去重
 let res = arr.reduce((pre, cur) => {
   pre.indexOf(cur) === -1 && pre.push(cur)

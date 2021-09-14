@@ -5,3 +5,4 @@ let arr2 = [4, 5, 6]
 
 arr1.push(...arr2)
 console.log(arr1)
+
