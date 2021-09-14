@@ -19,8 +19,9 @@ function DeepClone(obj, isArray) {
     let newObj = isArray ? [] : {}
     for(let key in obj) {
       if (checkType(obj[key]) === 'Array') {
-        DeepClone(obj[key], true)
-        console.log(DeepClone(obj[key], true))
+        newObj[key] = DeepClone(obj[key], true)
+      } else if(checkType(obj[key]) === 'Object') {
+        newObj[key] = DeepClone(obj[key])
       } else {
         newObj[key] = obj[key]
       }
