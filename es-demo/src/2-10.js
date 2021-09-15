@@ -13,15 +13,15 @@ let obj = {
 function checkType(data) {
   return Object.prototype.toString.call(data).slice(8, -1)
 }
+console.log(Object.prototype.toString.call([]))
 
-function DeepClone(obj, isArray) {
+function DeepClone(obj, isArr) {
   if (obj) {
-    let newObj = isArray ? [] : {}
+    let newObj = isArr ? [] : {}
     for(let key in obj) {
-      if (checkType(obj[key]) === 'Array') {
-        newObj[key] = DeepClone(obj[key], true)
-      } else if(checkType(obj[key]) === 'Object') {
-        newObj[key] = DeepClone(obj[key])
+      if (typeof obj[key] === 'object') {
+        const isArr = !!checkType(obj[key]) === 'Array'
+        newObj[key] = DeepClone(obj[key], isArr)
       } else {
         newObj[key] = obj[key]
       }
